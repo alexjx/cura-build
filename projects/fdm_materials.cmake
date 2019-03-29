@@ -1,7 +1,7 @@
 
 ExternalProject_Add(fdm_materials
-    GIT_REPOSITORY https://github.com/ultimaker/fdm_materials
-    GIT_TAG origin/${FDMMATERIALS_BRANCH_OR_TAG}
+    DOWNLOAD_COMMAND ""
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../fdm_materials
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNALPROJECT_INSTALL_PREFIX} -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
 )
 

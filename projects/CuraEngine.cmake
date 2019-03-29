@@ -15,8 +15,8 @@ elseif (BUILD_OS_OSX)
 endif()
 
 ExternalProject_Add(CuraEngine
-    GIT_REPOSITORY https://github.com/ultimaker/CuraEngine
-    GIT_TAG origin/${CURAENGINE_BRANCH_OR_TAG}
+    DOWNLOAD_COMMAND ""
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../CuraEngine
     CMAKE_ARGS -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                -DCMAKE_INSTALL_PREFIX=${EXTERNALPROJECT_INSTALL_PREFIX}
                -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}

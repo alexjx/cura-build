@@ -7,8 +7,8 @@ endif()
 find_package(PyQt 5.6 REQUIRED)
 
 ExternalProject_Add(libCharon
-    GIT_REPOSITORY https://github.com/Ultimaker/libCharon
-    GIT_TAG origin/${LIBCHARON_BRANCH_OR_TAG}
+    DOWNLOAD_COMMAND ""
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../libCharon
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNALPROJECT_INSTALL_PREFIX} -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
 )
 

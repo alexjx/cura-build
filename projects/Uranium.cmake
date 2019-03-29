@@ -8,8 +8,8 @@ find_package(PyQt 5.6 REQUIRED)
 find_package(SciPy 0.17 REQUIRED)
 
 ExternalProject_Add(Uranium
-    GIT_REPOSITORY https://github.com/ultimaker/Uranium
-    GIT_TAG origin/${URANIUM_BRANCH_OR_TAG}
+    DOWNLOAD_COMMAND ""
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Uranium
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNALPROJECT_INSTALL_PREFIX} -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
 )
 
