@@ -71,7 +71,13 @@ cpack_add_component(_cura DISPLAY_NAME "Ultimaker Cura Executable and Data Files
 cpack_add_component(vcredist DISPLAY_NAME "Install Visual Studio 2015 Redistributable")
 cpack_add_component(arduino DISPLAY_NAME "Install Arduino Drivers")
 
-set(CPACK_GENERATOR "NSIS")
+if(BUILD_OS_WIN32)
+    set(cpack_generator "NSIS")
+else()
+    set(cpack_generator "NSIS64")
+endif()
+
+set(CPACK_GENERATOR ${cpack_generator})
 set(CPACK_PACKAGE_NAME "Ultimaker Cura")
 string(REPLACE " " "" CPACK_PACKAGE_NAME_NO_WHITESPACES ${CPACK_PACKAGE_NAME})
 set(CPACK_PACKAGE_VENDOR "Ultimaker")
@@ -102,14 +108,6 @@ set(CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP ${CMAKE_SOURCE_DIR}\\\\packaging\\\\
 set(CPACK_NSIS_MUI_UNWELCOMEFINISHPAGE_BITMAP ${CMAKE_SOURCE_DIR}\\\\packaging\\\\cura_banner.bmp)
 set(CPACK_NSIS_INSTALLER_MUI_FINISHPAGE_RUN_CODE "!define MUI_FINISHPAGE_RUN \\\"$WINDIR\\\\explorer.exe\\\"\n!define MUI_FINISHPAGE_RUN_PARAMETERS \\\"$INSTDIR\\\\Cura.exe\\\"")	# Hack to ensure Cura is not started with admin rights
 
-# Needed to call the correct vcredist_x["32", "64"] executable
-# TODO: Use a variable, which is already known. For example CPACK_SYSTEM_NAME -> "win32"
-if(BUILD_OS_WIN32)
-    set(CPACK_NSIS_PACKAGE_ARCHITECTURE "32")
-else()
-    set(CPACK_NSIS_PACKAGE_ARCHITECTURE "64")
-endif()
-
 set(CPACK_NSIS_PACKAGE_NAME ${CPACK_PACKAGE_NAME})
 
 include(CPack)
@@ -117,6 +115,6 @@ include(CPack)
 add_custom_command(
     TARGET build_bundle POST_BUILD
     # NOTE: Needs testing here, whether CPACK_SYSTEM_NAME is working good for 64bit builds, too.
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/NSIS ${CMAKE_BINARY_DIR}/_CPack_Packages/${CPACK_SYSTEM_NAME}/NSIS
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/NSIS ${CMAKE_BINARY_DIR}/_CPack_Packages/${CPACK_SYSTEM_NAME}/${cpack_generator}
     COMMENT "copying NSIS scripts"
 )
